@@ -135,15 +135,15 @@ describe("Queries", function() {
       await container.items.create({ id: "doc1", age: 22 });
       await container.items.create({ id: "doc2", age: 22 });
       await container.items.create({ id: "doc3", age: null });
-      await container.items.create({ id: 'doc4', age: 22 })
-      await container.items.create({ id: 'doc5' })
-      await container.items.create({ id: 'doc6' })
+      await container.items.create({ id: "doc4", age: 22 });
+      await container.items.create({ id: "doc5" });
+      await container.items.create({ id: "doc6" });
     });
 
     it("returns undefined sum with undefined value in count", async function() {
-      const queryIterator = resources.container.items.query('SELECT SUM(c.age) FROM c');
+      const queryIterator = resources.container.items.query("SELECT SUM(c.age) FROM c");
       const { resources: sum } = await queryIterator.fetchAll();
-      console.log(sum)
+      console.log(sum);
     });
   });
 });

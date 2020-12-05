@@ -11,7 +11,7 @@ import {
   bulkInsertItems
 } from "../common/TestHelpers";
 import AbortController from "node-abort-controller";
-import { UsernamePasswordCredential } from "@azure/identity"
+import { UsernamePasswordCredential } from "@azure/identity";
 
 describe("NodeJS CRUD Tests", function() {
   this.timeout(process.env.MOCHA_TIMEOUT || 20000);
@@ -53,24 +53,29 @@ describe("NodeJS CRUD Tests", function() {
     it("throws on a bad endpoint", function() {
       assert.throws(() => new CosmosClient({ endpoint: "asda=asda;asada;" }));
     });
-    it.only('authenticates with AAD', async function () {
+    it.only("authenticates with AAD", async function() {
       const credentials = new UsernamePasswordCredential(
         "d984e8c2-a0e7-454c-bb61-5284841f200f",
         "210b273c-bfd0-45a6-a790-521cf7bb99f4",
         "sample2@cosmosdbaad.onmicrosoft.com",
-        "@@DT3stUser2",
+        "@@DT3stUser2"
       );
-      const token = await credentials.getToken("https://thweiss-rbactest-1.documents.azure.com/.default");
+      const token = await credentials.getToken(
+        "https://thweiss-rbactest-1.documents.azure.com/.default"
+      );
       const client = new CosmosClient({
         endpoint,
         tokenProvider: (requestInfo) => {
-          const AUTH_PREFIX = `type=aad&ver=1.0&sig=`
-          const authorizationToken = `${AUTH_PREFIX}${token.token}`
-          return authorizationToken as any
+          const AUTH_PREFIX = `type=aad&ver=1.0&sig=`;
+          const authorizationToken = `${AUTH_PREFIX}${token.token}`;
+          return authorizationToken as any;
         }
       });
-      const response = await client.database('database').container('container1').items.create({ id: 'new item', age: 22 })
-      console.log({ response })
+      const response = await client
+        .database("database")
+        .container("container1")
+        .items.create({ id: "new item", age: 22 });
+      console.log({ response });
     });
   });
   describe("Validate user passed AbortController.signal", function() {
